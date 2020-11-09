@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmSize": {
+            "value": "Standard_DS4_v2"
+        },
+        "PASku": {
+            "value": "byol"
+        },
+        "PAVersion": {
+            "value": "8.1.15"
+        },
+        "PACount": {
+            "value": 2
+        },
+        "VNetName": {
+            "value": "Transit-VNet"
+        },
+        "VNetRG": {
+            "value": "Transit"
+        },
+        "envPrefix": {
+            "value": "Transit-FW"
+        },
+        "manPrivateIPPrefix": {
+            "value": "10.153.0."
+        },
+        "manPrivateIPFirst": {
+            "value": 4
+        },
+        "trustPrivateIPPrefix": {
+            "value": "10.153.1."
+        },
+        "trustPrivateIPFirst": {
+            "value": 4
+        },
+        "untrustPrivateIPPrefix": {
+            "value": "10.153.2."
+        },
+        "untrustPrivateIPFirst": {
+            "value": 4
+        },
+        "managementSubnetName": {
+            "value": "Transit-Management"
+        },
+        "trustSubnetName": {
+            "value": "Transit-Private"
+        },
+        "untrustSubnetName": {
+            "value": "Transit-Public"
+        },
+        "Username": {
+            "value": "admin"
+        },
+        "Password": {
+            "value": "admin"
+        }
+    }
+}

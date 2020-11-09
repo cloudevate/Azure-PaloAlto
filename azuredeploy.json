@@ -9,7 +9,7 @@
                 "Standard_DS4_v2",
                 "Standard_DS5_v2"
             ],
-            "defaultValue": "Standard_DS3_v2",
+            "defaultValue": "Standard_DS4_v2",
             "metadata": {
                 "description": "Azure VM size for VM-Series"
             }
@@ -21,9 +21,9 @@
                 "bundle1",
                 "bundle2"
             ],
-            "defaultValue": "bundle1",
+            "defaultValue": "byol",
             "metadata": {
-                "description": "Specify the licensing option you wish to use."
+                "description": "Licensing was purchased in advance."
             }
         },
         "PAVersion": {
@@ -36,7 +36,7 @@
                 "9.1.0",
                 "latest"
             ],
-            "defaultValue": "latest",
+            "defaultValue": "8.1.15",
             "metadata": {
                 "description": "Version of PanOS to use."
             }
@@ -46,73 +46,73 @@
             "minValue": 1,
             "defaultValue": 2,
             "metadata": {
-                "description": "Number of virtual Palo Alto appliances you wish to deploy."
+                "description": "Deploy 2 virtual Palo Alto appliances."
             }
         },
         "VNetName": {
             "type": "string",
-            "defaultValue": "Test-VNET",
+            "defaultValue": "Transit-VNet",
             "metadata": {
                 "description": "The name of the virtual network the Palo Alto devices should be deployed to."
             }
         },
         "VNetRG": {
             "type": "string",
-            "defaultValue": "Test-VNET-RG",
+            "defaultValue": "Transit",
             "metadata": {
                 "description": "The name of the resource group your virtual network is in."
             }
         },
         "envPrefix": {
             "type": "string",
-            "defaultValue": "Contoso-FW"
+            "defaultValue": "Transit-FW"
         },
         "manPrivateIPPrefix": {
             "type": "string",
-            "defaultValue": "10.4.255."
+            "defaultValue": "10.153.0."
         },
         "manPrivateIPFirst": {
             "type": "int",
-            "defaultValue": 164
+            "defaultValue": 4
         },
         "trustPrivateIPPrefix": {
             "type": "string",
-            "defaultValue": "10.4.254."
+            "defaultValue": "10.153.1."
         },
         "trustPrivateIPFirst": {
             "type": "int",
-            "defaultValue": 196
+            "defaultValue": 4
         },
         "untrustPrivateIPPrefix": {
             "type": "string",
-            "defaultValue": "10.4.255."
+            "defaultValue": "10.153.2."
         },
         "untrustPrivateIPFirst": {
             "type": "int",
-            "defaultValue": 196
+            "defaultValue": 4
         },
         "managementSubnetName": {
             "type": "string",
-            "defaultValue": "Network-Management"
+            "defaultValue": "Transit-Management"
         },
         "trustSubnetName": {
             "type": "string",
-            "defaultValue": "Trust"
+            "defaultValue": "Transit-Private"
         },
         "untrustSubnetName": {
             "type": "string",
-            "defaultValue": "Untrust"
+            "defaultValue": "Transit-Public"
         },
         "Username": {
             "type": "string",
-            "defaultValue": "paloalto",
+            "defaultValue": "admin",
             "metadata": {
-                "description": "The name of the pivileged account that should be used to ssh and login to the PanOS web portal."
+                "description": "The name of the privileged account that should be used to ssh and login to the PanOS web portal."
             }
         },
         "Password": {
             "type": "securestring",
-            "defaultValue": "",
+            "defaultValue": "admin",
             "maxLength": 31,
             "metadata": {
                 "description": "Password to the privileged account used to ssh and login to the PanOS web portal."
@@ -507,7 +507,7 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "Allow-All-Out",
+                        "name": "Allow-Tcp-Out",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('trustLBName')), '/frontendIPConfigurations/', variables('trustLBName'),'-FrontEnd')]"
@@ -516,7 +516,7 @@
                             "backendPort": 0,
                             "enableFloatingIP": true,
                             "idleTimeoutInMinutes": 4,
-                            "protocol": "All",
+                            "protocol": "Tcp",
                             "loadDistribution": "Default",
                             "backendAddressPool": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('trustLBName')), '/backendAddressPools/', variables('availabilitySetName'))]"
